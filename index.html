@@ -24,11 +24,21 @@
         .services-section {
             background-color: #F9F9F9;
         }
+
+        /* Mobile menu animation */
+        .mobile-menu {
+            transition: all 0.3s ease-in-out;
+            max-height: 0;
+            overflow: hidden;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px; /* Increased max-height to ensure all content is visible */
+            overflow-y: auto; /* Add scrolling if needed */
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Tambahkan padding-top untuk kompensasi navbar fixed
-            
             // Deteksi scroll dan ubah tampilan navbar
             window.addEventListener('scroll', function() {
                 const navbar = document.getElementById('navbar');
@@ -44,17 +54,38 @@
                     navbar.classList.add('shadow-sm');
                 }
             });
+            
+            // Mobile menu toggle functionality
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.toggle('open');
+                // Toggle hamburger/close icon
+                document.getElementById('hamburger-icon').classList.toggle('hidden');
+                document.getElementById('close-icon').classList.toggle('hidden');
+            });
+            
+            // Close mobile menu when clicking a link
+            const mobileMenuLinks = document.querySelectorAll('#mobile-menu a');
+            mobileMenuLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    mobileMenu.classList.remove('open');
+                    document.getElementById('hamburger-icon').classList.remove('hidden');
+                    document.getElementById('close-icon').classList.add('hidden');
+                });
+            });
         });
     </script>
 </head>
-<body class="bg-white" style="padding-top: 15px;">
+<body class="bg-white">
     <!-- Promo Banner -->
-    <div class="bg-pink-800 text-white text-center py-2 text-sm mt-16 md:mt-14">
+    <div class="bg-pink-800 text-white text-center py-2 text-sm">
         <p>🌟 Nikmati Diskon 20% Off untuk Kunjungan Pertama Anda! 🌟</p>
     </div>
     
     <!-- Navigation -->
-    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 py-4 px-6 md:px-12 flex justify-between items-center transition-all duration-300 ease-in-out bg-white/95 backdrop-blur-sm shadow-sm">
+    <nav id="navbar" class="sticky top-0 z-50 py-3 px-6 md:px-12 flex flex-wrap justify-between items-center transition-all duration-300 ease-in-out bg-white/95 backdrop-blur-sm shadow-sm">
         <div class="flex items-center space-x-2">
             <div class="w-8 h-8 bg-pink-200 rounded-full flex items-center justify-center">
                 <span class="text-pink-800 font-semibold">S</span>
@@ -62,6 +93,19 @@
             <span class="font-semibold text-gray-800">Sidah Nail Art</span>
         </div>
         
+        <!-- Mobile menu button -->
+        <div class="block md:hidden">
+            <button id="mobile-menu-button" class="text-gray-800 focus:outline-none">
+                <span id="hamburger-icon" class="block">
+                    <i class="fas fa-bars text-xl"></i>
+                </span>
+                <span id="close-icon" class="hidden">
+                    <i class="fas fa-times text-xl"></i>
+                </span>
+            </button>
+        </div>
+        
+        <!-- Desktop menu -->
         <div class="hidden md:flex space-x-6">
             <a href="#" class="text-gray-800 hover:text-pink-600">HOME</a>
             <a href="#" class="text-gray-800 hover:text-pink-600">ABOUT</a>
@@ -70,11 +114,28 @@
             <a href="#" class="text-gray-800 hover:text-pink-600">CONTACT US</a>
         </div>
         
-        <div class="flex items-center space-x-4">
+        <div class="hidden md:flex items-center space-x-4">
             <a href="#" class="text-gray-800 hover:text-pink-600"><i class="fab fa-instagram"></i></a>
             <a href="#" class="text-gray-800 hover:text-pink-600"><i class="fab fa-facebook"></i></a>
             <a href="#" class="text-gray-800 hover:text-pink-600"><i class="fab fa-tiktok"></i></a>
-            <a href="#" class="bg-pink-800 text-white px-4 py-2 rounded hover:bg-pink-700">BOOK NOW</a>
+            <a href="https://wa.me/083890987338" class="bg-pink-800 text-white px-4 py-2 rounded hover:bg-pink-700">BOOK NOW</a>
+        </div>
+        
+        <!-- Mobile menu container -->
+        <div id="mobile-menu" class="mobile-menu w-full md:hidden">
+            <div class="flex flex-col space-y-2">
+                <a href="#" class="text-gray-800 hover:text-pink-600 border-b border-gray-100 py-2">HOME</a>
+                <a href="#" class="text-gray-800 hover:text-pink-600 border-b border-gray-100 py-2">ABOUT</a>
+                <a href="#" class="text-gray-800 hover:text-pink-600 border-b border-gray-100 py-2">PAKET</a>
+                <a href="#" class="text-gray-800 hover:text-pink-600 border-b border-gray-100 py-2">PORTFOLIO</a>
+                <a href="#" class="text-gray-800 hover:text-pink-600 border-b border-gray-100 py-2">CONTACT US</a>
+            </div>
+            <div class="flex items-center space-x-4 py-2 justify-center">
+                <a href="#" class="text-gray-800 hover:text-pink-600"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="text-gray-800 hover:text-pink-600"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-gray-800 hover:text-pink-600"><i class="fab fa-tiktok"></i></a>
+                <a href="https://wa.me/083890987338" class="bg-pink-800 text-white px-4 py-2 rounded hover:bg-pink-700">BOOK NOW</a>
+            </div>
         </div>
     </nav>
     
